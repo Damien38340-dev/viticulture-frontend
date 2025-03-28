@@ -8,7 +8,7 @@ import {Weather} from '../weather';
 })
 export class WeatherService {
 
-  private httpClient: HttpClient = inject(HttpClient);
+  private httpClient: HttpClient = inject(HttpClient); // Two ways to do it, either in the constructor or with inject()
   private baseURL = 'http://localhost:8080/api/weather';
   protected weatherDataList: Weather[] = [];
 

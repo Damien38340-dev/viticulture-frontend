@@ -1,14 +1,14 @@
-import {Component, Input, inject, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Weather} from '../../weather';
 import {WeatherService} from '../../services/weather.service';
 import {FormsModule} from '@angular/forms';
-import {NgForOf, NgIf} from '@angular/common';
+import {NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-weather',
   templateUrl: './weather.component.html',
   styleUrl: './weather.component.css',
-  imports: [FormsModule, NgForOf, NgIf],
+  imports: [FormsModule, NgForOf, NgIf, NgOptimizedImage],
   standalone: true
 })
 export class WeatherComponent implements OnInit {
@@ -19,6 +19,7 @@ export class WeatherComponent implements OnInit {
   weatherDataList: Weather[] = [];
   selectedCityWeather?: Weather;
   city: string = '';
+  showAllData = false;
 
   constructor(private weatherService: WeatherService) {
   }
@@ -39,5 +40,9 @@ export class WeatherComponent implements OnInit {
       next: data => this.selectedCityWeather = data,
       error: err => console.error('Error fetching weather data', err)
     });
+  }
+
+  toggleAllWeatherData(){
+    this.showAllData = !this.showAllData;
   }
 }

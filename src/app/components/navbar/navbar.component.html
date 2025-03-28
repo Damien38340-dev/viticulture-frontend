@@ -1,0 +1,14 @@
+<header>
+  <div class="container">
+    <nav>
+      <div class="nav-content">
+        <img class="logo" ngSrc="/assets/images/logo.png" alt="logo" height="49" width="356" [priority]="NgOptimizedImage">
+        <ul class="nav-links">
+          <li><a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
+          <li><a routerLink="/weather" routerLinkActive="active-link">Weather</a></li>
+          <li><a routerLink="/soil" routerLinkActive="active-link">Soil</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>

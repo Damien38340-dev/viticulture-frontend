@@ -7,12 +7,12 @@ import {SoilComponent} from './pages/soil/soil.component';
 import {HomeComponent} from './pages/home/home.component';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
+import {NavbarComponent} from './components/navbar/navbar.component';
 
 @NgModule({
-  imports: [BrowserModule, RouterModule, AppComponent, FormsModule, CommonModule, WeatherComponent],
-  declarations: [SoilComponent, HomeComponent],
+  imports: [BrowserModule, RouterModule,  CommonModule, AppComponent, HomeComponent, NavbarComponent, FormsModule, WeatherComponent, SoilComponent],
+  declarations: [],
   bootstrap: [],
   providers: [],
-
 })
 export class AppModule { }

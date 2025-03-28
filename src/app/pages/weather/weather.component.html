@@ -1,59 +1,91 @@
-<h2 class="text-center">{{ title }}</h2>
-<section>
-  <form>
-    <input [(ngModel)]="city" [ngModelOptions]="{standalone: true}" placeholder="Search by city">
-    <button class="btn-primary" type="button" (click)="fetchWeatherByCity(city)">Search</button>
-  </form>
-  <div *ngIf="selectedCityWeather">
-    <h3>Weather in {{ selectedCityWeather.city }} on {{ selectedCityWeather.date }}</h3>
-    <p><strong>Temperature:</strong> {{ selectedCityWeather.temperature }}°C</p>
-    <p><strong>Min Temperature:</strong> {{ selectedCityWeather.temperatureMin }}°C</p>
-    <p><strong>Max Temperature:</strong> {{ selectedCityWeather.temperatureMax }}°C</p>
-    <p><strong>Humidity:</strong> {{ selectedCityWeather.humidity }}%</p>
-    <p><strong>Pressure:</strong> {{ selectedCityWeather.pressure }} hPa</p>
-    <p><strong>Wind Speed:</strong> {{ selectedCityWeather.windSpeed }} km/h</p>
-    <p><strong>Wind Direction:</strong> {{ selectedCityWeather.windDirection }}°</p>
-    <p><strong>Precipitation:</strong> {{ selectedCityWeather.precipitation }} mm</p>
-    <p><strong>Insolation Duration:</strong> {{ selectedCityWeather.insolationDuration }} hours</p>
+<div class="weather-page">
+  <div class="hero-image-container">
+    <img class="hero-image" ngSrc="/assets/images/pexels-alex-staudinger-829197-1731834.jpg" [priority]="true"
+         alt="weather" height="4016" width="6016">
+    <h1 class="hero-title">{{ title }}</h1>
   </div>
 
-  <hr/>
-</section>
-<section class="results">
-  <!-- Display all weather data -->
-  <div *ngIf="weatherDataList.length">
-    <h3>All Weather Data</h3>
-    <table>
-      <thead>
-      <tr>
-        <th>City</th>
-        <th>Date</th>
-        <th>Temp (°C)</th>
-        <th>Min Temp (°C)</th>
-        <th>Max Temp (°C)</th>
-        <th>Humidity (%)</th>
-        <th>Pressure (hPa)</th>
-        <th>Wind Speed (km/h)</th>
-        <th>Wind Direction (°)</th>
-        <th>Precipitation (mm)</th>
-        <th>Insolation (hrs)</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let weather of weatherDataList">
-        <td>{{ weather.city }}</td>
-        <td>{{ weather.date }}</td>
-        <td>{{ weather.temperature }}</td>
-        <td>{{ weather.temperatureMin }}</td>
-        <td>{{ weather.temperatureMax }}</td>
-        <td>{{ weather.humidity }}</td>
-        <td>{{ weather.pressure }}</td>
-        <td>{{ weather.windSpeed }}</td>
-        <td>{{ weather.windDirection }}</td>
-        <td>{{ weather.precipitation }}</td>
-        <td>{{ weather.insolationDuration }}</td>
-      </tr>
-      </tbody>
-    </table>
+  <div class="content-container">
+    <div class="search-section">
+      <form class="weather-search-form">
+        <input
+          [(ngModel)]="city"
+          [ngModelOptions]="{standalone: true}"
+          placeholder="Search by city"
+          class="search-input"
+        >
+        <button
+          class="search-button"
+          type="button"
+          (click)="fetchWeatherByCity(city)"
+        >
+          Search
+        </button>
+      </form>
+    </div>
+
+    <div class="data-section">
+      <div *ngIf="selectedCityWeather" class="selected-city-weather">
+        <h3>Weather in {{ selectedCityWeather.city }} on {{ selectedCityWeather.date }}</h3>
+        <div class="weather-details">
+          <p><strong>Temperature:</strong> {{ selectedCityWeather.temperature }}°C</p>
+          <p><strong>Min Temperature:</strong> {{ selectedCityWeather.temperatureMin }}°C</p>
+          <p><strong>Max Temperature:</strong> {{ selectedCityWeather.temperatureMax }}°C</p>
+          <p><strong>Humidity:</strong> {{ selectedCityWeather.humidity }}%</p>
+          <p><strong>Pressure:</strong> {{ selectedCityWeather.pressure }} hPa</p>
+          <p><strong>Wind Speed:</strong> {{ selectedCityWeather.windSpeed }} km/h</p>
+          <p><strong>Wind Direction:</strong> {{ selectedCityWeather.windDirection }}°</p>
+          <p><strong>Precipitation:</strong> {{ selectedCityWeather.precipitation }} mm</p>
+          <p><strong>Insolation Duration:</strong> {{ selectedCityWeather.insolationDuration }} hours</p>
+        </div>
+      </div>
+
+      <button
+        class="show-all-data-btn"
+        (click)="toggleAllWeatherData()"
+      >
+        {{ showAllData ? 'Hide' : 'Show' }} All Weather Data
+      </button>
+    </div>
   </div>
-</section>
+
+  <section class="results" *ngIf="showAllData">
+    <div *ngIf="weatherDataList.length">
+      <h3>All Weather Data</h3>
+      <div class="table-responsive">
+        <table>
+          <thead>
+          <tr>
+            <th>City</th>
+            <th>Date</th>
+            <th>Temp (°C)</th>
+            <th>Min Temp (°C)</th>
+            <th>Max Temp (°C)</th>
+            <th>Humidity (%)</th>
+            <th>Pressure (hPa)</th>
+            <th>Wind Speed (km/h)</th>
+            <th>Wind Direction (°)</th>
+            <th>Precipitation (mm)</th>
+            <th>Insolation (hrs)</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let weather of weatherDataList">
+            <td>{{ weather.city }}</td>
+            <td>{{ weather.date }}</td>
+            <td>{{ weather.temperature }}</td>
+            <td>{{ weather.temperatureMin }}</td>
+            <td>{{ weather.temperatureMax }}</td>
+            <td>{{ weather.humidity }}</td>
+            <td>{{ weather.pressure }}</td>
+            <td>{{ weather.windSpeed }}</td>
+            <td>{{ weather.windDirection }}</td>
+            <td>{{ weather.precipitation }}</td>
+            <td>{{ weather.insolationDuration }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>

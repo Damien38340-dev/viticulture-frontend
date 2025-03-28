@@ -1,13 +1,71 @@
-<h2 class="text-center">{{title}}</h2>
+<div class="soil-page">
+  <div class="hero-image-container">
+    <img class="hero-image" ngSrc="/assets/images/spencer-demera-ntkg_rbRhpg-unsplash.jpg" [priority]="true"
+         alt="weather" height="4000" width="6000">
+    <h1 class="hero-title">{{ title }}</h1>
+  </div>
 
-<section>
-  <form>
-    <input type="text" placeholder="Search by polyId">
-    <button class="btn-primary" type="button" name="{{soil.polyId}}">Search</button>
-  </form>
-</section>
-<section class="results">
-  <ul>
-    <li>{{ soilDataList }}</li>
-  </ul>
-</section>
+  <div class="content-container">
+    <div class="search-section">
+      <form class="soil-search-form">
+        <input
+          [(ngModel)]="polyId"
+          [ngModelOptions]="{standalone: true}"
+          placeholder="Search by polyId"
+          class="search-input"
+        >
+        <button
+          class="search-button"
+          type="button"
+          (click)="fetchSoilDataByPolyId(polyId)"
+        >
+          Search
+        </button>
+      </form>
+    </div>
+    <div class="data-section">
+      <div *ngIf="selectedPolyId" class="selected-polyid-soil">
+        <h3>Soil Data for polyId: {{ selectedPolyId.polyId }} on {{ selectedPolyId.date }}</h3>
+        <div class="weather-details">
+          <p><strong>Temperature on the 10 centimeters depth:</strong> {{ selectedPolyId.t10 }}°C</p>
+          <p><strong>Temperature on the surface:</strong> {{ selectedPolyId.t0 }}</p>
+          <p><strong>Moisture:</strong> {{ selectedPolyId.moisture }}m3/m3</p>
+        </div>
+      </div>
+
+      <button
+        class="show-all-data-btn"
+        (click)="toggleAllSoilData()">
+        {{ showAllData ? 'Hide' : 'Show' }} All Soil Data
+      </button>
+    </div>
+  </div>
+
+  <section class="results" *ngIf="showAllData">
+    <div *ngIf="soilDataList.length">
+      <h3>All Soil Data</h3>
+      <div class="table-responsive">
+        <table>
+          <thead>
+          <tr>
+            <th>PolyId</th>
+            <th>Date</th>
+            <th>T10</th>
+            <th>T0</th>
+            <th>Moisture</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let soil of soilDataList">
+            <td>{{ soil.polyId }}</td>
+            <td>{{ soil.date }}</td>
+            <td>{{ soil.t10 }}</td>
+            <td>{{ soil.t0 }}</td>
+            <td>{{ soil.moisture }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>

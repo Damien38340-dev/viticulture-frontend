@@ -5,7 +5,7 @@ import {HomeComponent} from './pages/home/home.component';
 import {SoilComponent} from './pages/soil/soil.component';
 
 export const routes: Routes = [
-  { path: '', title: 'Grow Your Wine - Home Page', component: HomeComponent},
+  { path: '', title: 'Make It Grow - Home Page', component: HomeComponent},
   { path: 'weather', title: 'Weather', component: WeatherComponent },
   { path: 'soil', title: 'Soil', component: SoilComponent},
   { path: '**', title: 'Error', component: PageNotFoundComponent}
