@@ -25,10 +25,7 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              },
-              "src/favicon.ico",
-              "src/assets",
-              "src/assets/_redirects"
+              }
             ],
             "styles": [
               "./node_modules/bootstrap/dist/css/bootstrap.css",
@@ -87,10 +84,7 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              },
-              "src/favicon.ico",
-              "src/assets",
-              "src/assets/_redirects"
+              }
             ],
             "styles": [
               "src/styles.css"
