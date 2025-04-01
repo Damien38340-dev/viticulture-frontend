@@ -2,6 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {Soil} from '../soil';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {environment} from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import {Observable} from 'rxjs';
 export class SoilService {
 
   private httpClient: HttpClient = inject(HttpClient); // Two ways to do it, either in the constructor or with inject()
-  private baseUrl = 'http://localhost:8080/api/soil';
+  private baseUrl = environment.apiUrl;
   protected soilDataList: Soil[] = [];
 
 
@@ -22,6 +23,6 @@ export class SoilService {
   }
 
   getSoilDataByPolyId(polyId: string): Observable<Soil> {
-    return this.httpClient.get<Soil>(`${this.baseUrl}/polyid/${polyId}`);
+    return this.httpClient.get<Soil>(`${this.baseUrl}/api/soil/polyid/${polyId}`);
   }
 }
