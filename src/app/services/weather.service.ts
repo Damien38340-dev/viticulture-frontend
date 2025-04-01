@@ -10,7 +10,7 @@ import {environment} from '../../environments/environment.prod';
 export class WeatherService {
 
   private httpClient: HttpClient = inject(HttpClient); // Two ways to do it, either in the constructor or with inject()
-  private baseURL = environment.apiUrl;
+  private baseUrl = environment.apiUrl;
   protected weatherDataList: Weather[] = [];
 
   constructor() {
@@ -18,10 +18,10 @@ export class WeatherService {
 
 
   getAllWeatherData(): Observable<Weather[]> {
-    return this.httpClient.get<Weather[]>(this.baseURL)
+    return this.httpClient.get<Weather[]>(`${this.baseUrl}/api/weather`)
   }
 
   getWeatherByCity(city: string): Observable<Weather> {
-    return this.httpClient.get<Weather>(`${this.baseURL}/api/weather/city/${city}`);
+    return this.httpClient.get<Weather>(`${this.baseUrl}/api/weather/city/${city}`);
   }
 }

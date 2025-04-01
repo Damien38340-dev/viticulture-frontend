@@ -19,7 +19,7 @@ export class SoilService {
 
 
   getAllSoilData(): Observable<Soil[]> {
-    return this.httpClient.get<Soil[]>(this.baseUrl);
+    return this.httpClient.get<Soil[]>(`${this.baseUrl}/api/soil`);
   }
 
   getSoilDataByPolyId(polyId: string): Observable<Soil> {
