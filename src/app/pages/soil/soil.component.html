@@ -1,14 +1,14 @@
-<div class="soil-page">
+<div class="content-page">
   <div class="hero-image-container">
     <div class="hero-overlay"></div>
     <img class="hero-image" ngSrc="/assets/images/spencer-demera-ntkg_rbRhpg-unsplash.jpg" [priority]="true"
-         alt="weather" height="4000" width="6000">
+         alt="soil" height="4000" width="6000">
     <h1 class="hero-title">{{ title }}</h1>
   </div>
 
   <div class="content-container">
     <div class="search-section">
-      <form class="soil-search-form">
+      <form class="content-search-form">
         <div class="search-wrapper">
           <i class="search-icon fas fa-search"></i>
           <input
@@ -30,22 +30,19 @@
 
 
     <div class="data-section">
-      <div *ngIf="selectedPolyId" class="selected-polyid-soil">
-        <div class="soil-card">
-          <div class="soil-card-header">
+      <div *ngIf="selectedPolyId" class="selected-content">
+        <div class="content-card">
+          <div class="content-card-header">
             <h3>Soil Data for polyId: {{ selectedPolyId.polyId }}</h3>
-            <p class="soil-date">{{ selectedPolyId.date }}</p>
+            <p class="content-date">{{ selectedPolyId.date }}</p>
           </div>
 
-            <div class="soil-details">
-              <p><strong>Temperature on the 10 centimeters depth:</strong> {{ selectedPolyId.t10 }}°C</p>
-              <p><strong>Temperature on the surface:</strong> {{ selectedPolyId.t0 }}°C</p>
-              <p><strong>Moisture:</strong> {{ selectedPolyId.moisture }} m3/m3</p>
-            </div>
-
-
+          <div class="content-details">
+            <p><strong>Temperature on the 10 centimeters depth:</strong> {{ selectedPolyId.t10 }}°C</p>
+            <p><strong>Temperature on the surface:</strong> {{ selectedPolyId.t0 }}°C</p>
+            <p><strong>Moisture:</strong> {{ selectedPolyId.moisture }} m3/m3</p>
+          </div>
         </div>
-
       </div>
 
       <button
@@ -83,7 +80,7 @@
       </div>
     </div>
   </section>
-  <footer class="soil-footer">
+  <footer>
     <div class="footer-content">
       <p>Soil data provided by Soil API</p>
       <p>© {{ currentYear }} Soil App</p>

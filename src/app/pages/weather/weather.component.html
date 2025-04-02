@@ -1,11 +1,9 @@
-<div class="weather-page">
-  <!-- Hero Section with Weather Overlay -->
+<div class="content-page">
   <div class="hero-image-container">
-    <div class="hero-overlay"></div>
     <img class="hero-image" ngSrc="/assets/images/pexels-alex-staudinger-829197-1731834.jpg" [priority]="true"
          alt="weather" height="4016" width="6016">
     <h1 class="hero-title">{{ title }}</h1>
-    <div class="weather-icon-container" *ngIf="selectedCityWeather">
+    <div class="content-icon-container" *ngIf="selectedCityWeather">
       <i class="weather-icon" [ngClass]="getWeatherIcon()"></i>
     </div>
   </div>
@@ -13,7 +11,7 @@
   <div class="content-container">
     <!-- Enhanced Search Section -->
     <div class="search-section">
-      <form class="weather-search-form">
+      <form class="content-search-form">
         <div class="search-wrapper">
           <i class="search-icon fas fa-search"></i>
           <input
@@ -35,14 +33,14 @@
 
     <!-- Weather Card Section -->
     <div class="data-section">
-      <div *ngIf="selectedCityWeather" class="selected-city-weather">
-        <div class="weather-card">
-          <div class="weather-card-header">
+      <div *ngIf="selectedCityWeather" class="selected-content">
+        <div class="content-card">
+          <div class="content-card-header">
             <h3>Weather in {{ selectedCityWeather.city }}</h3>
-            <p class="weather-date">{{ selectedCityWeather.date }}</p>
+            <p class="content-date">{{ selectedCityWeather.date }}</p>
           </div>
 
-          <div class="weather-main-info">
+          <div class="content-main-info">
             <div class="temperature-display">
               <span class="current-temp">{{ selectedCityWeather.temperature }}°C</span>
               <div class="temp-range">
@@ -57,7 +55,7 @@
             </div>
           </div>
 
-          <div class="weather-details">
+          <div class="content-details">
             <div class="detail-item">
               <div class="detail-icon"><i class="fas fa-tint"></i></div>
               <div class="detail-text">
@@ -173,8 +171,8 @@
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="weather-footer">
+
+  <footer>
     <div class="footer-content">
       <p>Weather data provided by Weather API</p>
       <p>© {{ currentYear }} Weather App</p>

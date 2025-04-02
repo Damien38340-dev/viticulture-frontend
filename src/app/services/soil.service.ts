@@ -17,7 +17,6 @@ export class SoilService {
   constructor() {
   }
 
-
   getAllSoilData(): Observable<Soil[]> {
     return this.httpClient.get<Soil[]>(`${this.baseUrl}/api/soil`);
   }
