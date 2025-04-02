@@ -1,42 +1,106 @@
 <div class="weather-page">
+  <!-- Hero Section with Weather Overlay -->
   <div class="hero-image-container">
+    <div class="hero-overlay"></div>
     <img class="hero-image" ngSrc="/assets/images/pexels-alex-staudinger-829197-1731834.jpg" [priority]="true"
          alt="weather" height="4016" width="6016">
     <h1 class="hero-title">{{ title }}</h1>
+    <div class="weather-icon-container" *ngIf="selectedCityWeather">
+      <i class="weather-icon" [ngClass]="getWeatherIcon()"></i>
+    </div>
   </div>
 
   <div class="content-container">
+    <!-- Enhanced Search Section -->
     <div class="search-section">
       <form class="weather-search-form">
-        <input
-          [(ngModel)]="city"
-          [ngModelOptions]="{standalone: true}"
-          placeholder="Search by city"
-          class="search-input"
-        >
+        <div class="search-wrapper">
+          <i class="search-icon fas fa-search"></i>
+          <input
+            [(ngModel)]="city"
+            [ngModelOptions]="{standalone: true}"
+            placeholder="Search by city"
+            class="search-input"
+          >
+        </div>
         <button
           class="search-button"
           type="button"
           (click)="fetchWeatherByCity(city)"
         >
-          Search
+          <span>Search</span>
         </button>
       </form>
     </div>
 
+    <!-- Weather Card Section -->
     <div class="data-section">
       <div *ngIf="selectedCityWeather" class="selected-city-weather">
-        <h3>Weather in {{ selectedCityWeather.city }} on {{ selectedCityWeather.date }}</h3>
-        <div class="weather-details">
-          <p><strong>Temperature:</strong> {{ selectedCityWeather.temperature }}°C</p>
-          <p><strong>Min Temperature:</strong> {{ selectedCityWeather.temperatureMin }}°C</p>
-          <p><strong>Max Temperature:</strong> {{ selectedCityWeather.temperatureMax }}°C</p>
-          <p><strong>Humidity:</strong> {{ selectedCityWeather.humidity }}%</p>
-          <p><strong>Pressure:</strong> {{ selectedCityWeather.pressure }} hPa</p>
-          <p><strong>Wind Speed:</strong> {{ selectedCityWeather.windSpeed }} km/h</p>
-          <p><strong>Wind Direction:</strong> {{ selectedCityWeather.windDirection }}°</p>
-          <p><strong>Precipitation:</strong> {{ selectedCityWeather.precipitation }} mm</p>
-          <p><strong>Insolation Duration:</strong> {{ selectedCityWeather.insolationDuration }} hours</p>
+        <div class="weather-card">
+          <div class="weather-card-header">
+            <h3>Weather in {{ selectedCityWeather.city }}</h3>
+            <p class="weather-date">{{ selectedCityWeather.date }}</p>
+          </div>
+
+          <div class="weather-main-info">
+            <div class="temperature-display">
+              <span class="current-temp">{{ selectedCityWeather.temperature }}°C</span>
+              <div class="temp-range">
+                <span class="temp-min">{{ selectedCityWeather.temperatureMin }}°C</span>
+                <span class="temp-separator">|</span>
+                <span class="temp-max">{{ selectedCityWeather.temperatureMax }}°C</span>
+              </div>
+            </div>
+            <div class="weather-condition">
+              <i class="condition-icon" [ngClass]="getWeatherIcon()"></i>
+              <span class="condition-text">{{ getWeatherCondition() }}</span>
+            </div>
+          </div>
+
+          <div class="weather-details">
+            <div class="detail-item">
+              <div class="detail-icon"><i class="fas fa-tint"></i></div>
+              <div class="detail-text">
+                <span class="detail-label">Humidity</span>
+                <span class="detail-value">{{ selectedCityWeather.humidity }}%</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-icon"><i class="fas fa-compress-alt"></i></div>
+              <div class="detail-text">
+                <span class="detail-label">Pressure</span>
+                <span class="detail-value">{{ selectedCityWeather.pressure }} hPa</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-icon"><i class="fas fa-wind"></i></div>
+              <div class="detail-text">
+                <span class="detail-label">Wind Speed</span>
+                <span class="detail-value">{{ selectedCityWeather.windSpeed }} km/h</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-icon"><i class="fas fa-compass"></i></div>
+              <div class="detail-text">
+                <span class="detail-label">Wind Direction</span>
+                <span class="detail-value">{{ selectedCityWeather.windDirection }}°</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-icon"><i class="fas fa-cloud-rain"></i></div>
+              <div class="detail-text">
+                <span class="detail-label">Precipitation</span>
+                <span class="detail-value">{{ selectedCityWeather.precipitation }} mm</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-icon"><i class="fas fa-sun"></i></div>
+              <div class="detail-text">
+                <span class="detail-label">Sunshine</span>
+                <span class="detail-value">{{ selectedCityWeather.insolationDuration }} hrs</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -49,9 +113,10 @@
     </div>
   </div>
 
+  <!-- Weather History Section -->
   <section class="results" *ngIf="showAllData">
-    <div *ngIf="weatherDataList.length">
-      <h3>All Weather Data</h3>
+    <div *ngIf="weatherDataList.length" class="results-container">
+      <h3 class="section-title">Weather History</h3>
       <div class="table-responsive">
         <table>
           <thead>
@@ -70,7 +135,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let weather of weatherDataList">
+          <tr *ngFor="let weather of weatherDataList" (click)="selectWeatherData(weather)" [ngClass]="{'selected-row': isSelectedWeather(weather)}">
             <td>{{ weather.city }}</td>
             <td>{{ weather.date }}</td>
             <td>{{ weather.temperature }}</td>
@@ -88,4 +153,31 @@
       </div>
     </div>
   </section>
+
+  <!-- Forecast Section -->
+  <section class="forecast-section" *ngIf="selectedCityWeather">
+    <div class="forecast-container">
+      <h3 class="section-title">5-Day Forecast</h3>
+      <div class="forecast-cards">
+        <div class="forecast-card" *ngFor="let day of generateForecastData()">
+          <div class="forecast-day">{{ day.date | date:'EEE' }}</div>
+          <div class="forecast-icon">
+            <i [ngClass]="day.icon"></i>
+          </div>
+          <div class="forecast-temp">
+            <span class="forecast-temp-max">{{ day.max }}°</span>
+            <span class="forecast-temp-min">{{ day.min }}°</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="weather-footer">
+    <div class="footer-content">
+      <p>Weather data provided by Weather API</p>
+      <p>© {{ currentYear }} Weather App</p>
+    </div>
+  </footer>
 </div>

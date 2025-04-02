@@ -1,7 +1,189 @@
-<div class="hero-image-container">
-  <img class="hero-image" ngSrc="/assets/images/beautiful-view-vineyard-green-hills-sunset.jpg" alt="vineyard"
-       [priority]="true" height="1333" width="2000">
-  <h1 class="hero-title">{{ title }}</h1>
-
+<div class="hero-section">
+  <div class="hero-image-container">
+    <img class="hero-image" ngSrc="/assets/images/beautiful-view-vineyard-green-hills-sunset.jpg" alt="vineyard"
+         [priority]="true" height="1333" width="2000">
+    <div class="hero-overlay">
+      <h1 class="hero-title">{{ title }}</h1>
+      <p class="hero-subtitle">Smart solutions for modern vineyard management</p>
+      <div class="hero-cta">
+        <a href="/dashboard" class="btn btn-primary">Get Started</a>
+        <a href="/tour" class="btn btn-secondary">Take a Tour</a>
+      </div>
+    </div>
+  </div>
 </div>
 
+<section class="main-benefits">
+  <div class="container">
+    <h2 class="section-title">Optimize Your Vineyard with Real-Time Data</h2>
+    <p class="section-description">Make data-driven decisions with our comprehensive vineyard management platform.</p>
+
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <i class="fas fa-cloud-sun"></i>
+        </div>
+        <h3>Weather Forecasting</h3>
+        <p>Access accurate 10-day forecasts tailored to your vineyard's microclimate.</p>
+        <a href="/weather" class="btn-text">Check Weather <i class="fas fa-arrow-right"></i></a>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <i class="fas fa-seedling"></i>
+        </div>
+        <h3>Soil Analysis</h3>
+        <p>Monitor soil conditions including moisture, pH, and nutrient levels in real-time.</p>
+        <a href="/soil" class="btn-text">Analyze Soil <i class="fas fa-arrow-right"></i></a>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <i class="fas fa-bell"></i>
+        </div>
+        <h3>Smart Alerts</h3>
+        <p>Receive notifications for frost risk, ideal harvesting conditions, and pest threats.</p>
+        <a href="/alerts" class="btn-text">Set Up Alerts <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features-section">
+  <div class="container">
+    <h2 class="section-title">Key Features</h2>
+    <div class="features-container">
+      <div class="feature-item">
+        <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+        <div class="feature-content">
+          <h3>Data Analytics</h3>
+          <p>Comprehensive dashboards with historical data analysis and trend predictions.</p>
+        </div>
+      </div>
+
+      <div class="feature-item">
+        <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+        <div class="feature-content">
+          <h3>Mobile Access</h3>
+          <p>Monitor your vineyard from anywhere with our responsive mobile application.</p>
+        </div>
+      </div>
+
+      <div class="feature-item">
+        <div class="feature-icon"><i class="fas fa-map-marked-alt"></i></div>
+        <div class="feature-content">
+          <h3>Field Mapping</h3>
+          <p>Interactive maps of your vineyard with zone-specific data visualization.</p>
+        </div>
+      </div>
+
+      <div class="feature-item">
+        <div class="feature-icon"><i class="fas fa-calendar-alt"></i></div>
+        <div class="feature-content">
+          <h3>Seasonal Planning</h3>
+          <p>AI-powered recommendations for optimal pruning, treatment, and harvesting schedules.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials-section">
+  <div class="container">
+    <h2 class="section-title">What Our Clients Say</h2>
+    <div class="testimonial-slider">
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <p>"Since implementing this system, we've seen a 15% increase in our yield quality and significantly reduced
+            our water usage."</p>
+        </div>
+        <div class="testimonial-author">
+          <img ngSrc="/assets/images/testimonial-1.jpg" alt="Vineyard Owner" class="author-image" height="3333"
+               width="5000">
+          <div class="author-info">
+            <h4>Jean Dupont</h4>
+            <p>Owner, Château Lumière</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <p>"The alert system saved our harvest during an unexpected frost. The ROI on this platform has been
+            exceptional."</p>
+        </div>
+        <div class="testimonial-author">
+          <img ngSrc="/assets/images/testimonial-2.jpg" alt="Vineyard Manager" class="author-image" height="3994"
+               width="5439">
+          <div class="author-info">
+            <h4>Maria Rodriguez</h4>
+            <p>Manager, Viñedos del Sol</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <h2>Ready to Transform Your Vineyard Management?</h2>
+    <p>Join hundreds of vineyard owners who are optimizing their operations with our platform.</p>
+    <div class="cta-buttons">
+      <a href="/signup" class="btn btn-primary">Start Free Trial</a>
+      <a href="/demo" class="btn btn-secondary">Request Demo</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img ngSrc="/assets/images/logo.png" alt="Make It Grow Logo" class="footer-logo" height="49" width="356">
+        <p>Smart solutions for modern vineyard management.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><p>Features</p></li>
+          <li><p>Pricing</p></li>
+          <li><p>About Us</p></li>
+          <li><p>Contact</p></li>
+        </ul>
+      </div>
+
+      <div class="footer-links">
+        <h4>Resources</h4>
+        <ul>
+          <li><p>Blog</p></li>
+          <li><p>Guides</p></li>
+          <li><p>Webinars</p></li>
+          <li><p>Support</p></li>
+        </ul>
+      </div>
+
+      <div class="footer-contact">
+        <h4>Contact Us</h4>
+        <p><i class="fas fa-envelope"></i> support&#64;makeitgrow.com</p>
+        <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+        <p><i class="fas fa-map-marker-alt"></i> 123 Vineyard Way, Wine Valley</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Make It Grow. All rights reserved.</p>
+      <div class="legal-links">
+        <p>Privacy Policy</p>
+        <p>Terms of Service</p>
+      </div>
+    </div>
+  </div>
+</footer>

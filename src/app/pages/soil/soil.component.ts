@@ -2,13 +2,13 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Soil} from '../../soil';
 import {SoilService} from '../../services/soil.service';
 import {FormsModule} from '@angular/forms';
-import {NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
+import {NgClass, NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-soil',
   templateUrl: './soil.component.html',
   styleUrl: './soil.component.css',
-  imports: [FormsModule, NgForOf, NgIf, NgOptimizedImage],
+  imports: [FormsModule, NgForOf, NgIf, NgOptimizedImage, NgClass],
   standalone: true
 })
 export class SoilComponent implements OnInit {
@@ -20,6 +20,7 @@ export class SoilComponent implements OnInit {
   selectedPolyId?: Soil;
   polyId: string = '';
   showAllData = false;
+  currentYear = new Date().getFullYear();
 
   constructor(private soilService: SoilService) {
   }
@@ -40,6 +41,15 @@ export class SoilComponent implements OnInit {
       next: data => this.selectedPolyId = data,
       error: err => console.error('Error fetching soil data', err),
     });
+  }
+
+  selectSoilData(soil: Soil): void {
+    this.selectedPolyId = soil;
+  }
+
+  isSelectedSoil(soil: Soil): boolean {
+    return this.selectedPolyId?.polyId === soil.polyId &&
+      this.selectedPolyId?.date === soil.date;
   }
 
   toggleAllSoilData() {
