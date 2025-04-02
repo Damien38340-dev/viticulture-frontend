@@ -8,9 +8,10 @@ import {HomeComponent} from './pages/home/home.component';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {NavbarComponent} from './components/navbar/navbar.component';
+import {DatabaseStatusComponent} from './components/database-status/database-status.component';
 
 @NgModule({
-  imports: [BrowserModule, RouterModule,  CommonModule, AppComponent, HomeComponent, NavbarComponent, FormsModule, WeatherComponent, SoilComponent],
+  imports: [BrowserModule, RouterModule,  CommonModule, AppComponent, HomeComponent, NavbarComponent, FormsModule, WeatherComponent, SoilComponent, DatabaseStatusComponent],
   declarations: [],
   bootstrap: [],
   providers: [],

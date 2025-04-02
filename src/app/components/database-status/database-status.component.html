@@ -1,0 +1,33 @@
+
+<div *ngIf="dbStatus !== 'online'" class="db-status-overlay">
+  <div class="db-status-container">
+    <h2>Base de données indisponible</h2>
+    <p>La base de données semble être en pause. Cela arrive fréquemment avec les plans gratuits d'hébergement.</p>
+
+    <div class="status-indicator">
+      <div *ngIf="dbStatus === 'checking'" class="checking">
+        <span class="spinner"></span>
+        <span>Vérification de la connexion...</span>
+      </div>
+      <div *ngIf="dbStatus === 'offline'" class="offline">
+        <span class="error-icon">⚠️</span>
+        <span>Hors ligne</span>
+      </div>
+    </div>
+
+    <p>Veuillez cliquer sur le bouton ci-dessous pour tenter de réactiver la connexion. Si le problème persiste après plusieurs tentatives, la base de données devra être réactivée manuellement.</p>
+
+    <div class="actions">
+      <button
+        (click)="retryConnection()"
+        [disabled]="dbStatus === 'checking'"
+        class="retry-button">
+        {{ dbStatus === 'checking' ? 'Connexion en cours...' : 'Réessayer' }}
+      </button>
+    </div>
+
+    <div class="demo-note">
+      <p><strong>Note pour les recruteurs :</strong> Cette application utilise une base de données hébergée sur un plan gratuit qui se met en pause après une période d'inactivité. Si vous ne parvenez pas à vous connecter après plusieurs tentatives, n'hésitez pas à me contacter pour que je puisse la réactiver manuellement.</p>
+    </div>
+  </div>
+</div>
