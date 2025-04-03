@@ -4,7 +4,7 @@
          alt="weather" height="4016" width="6016">
     <h1 class="hero-title">{{ title }}</h1>
     <div class="content-icon-container" *ngIf="selectedCityWeather">
-      <i class="weather-icon" [ngClass]="selectedCityWeather.weatherIcon"></i>
+      <i class="weather-icon" [ngClass]="selectedCityWeather.formattedIcon"></i>
     </div>
   </div>
 
@@ -59,8 +59,9 @@
               </div>
             </div>
             <div class="weather-condition">
-              <i class="condition-icon" [ngClass]="selectedCityWeather.weatherIcon"></i>
+              <i class="condition-icon" [ngClass]="selectedCityWeather.formattedIcon"></i>
               <span class="condition-text">{{ selectedCityWeather.weatherCondition }}</span>
+              <span class="condition-text">{{ selectedCityWeather.weatherDescription }}</span>
             </div>
           </div>
 
@@ -140,6 +141,8 @@
             <th>Temp (°C)</th>
             <th>Min Temp (°C)</th>
             <th>Max Temp (°C)</th>
+            <th>Sunrise</th>
+            <th>Sunset</th>
             <th>Humidity (%)</th>
             <th>Pressure (hPa)</th>
             <th>Wind Speed (km/h)</th>
@@ -157,6 +160,8 @@
             <td>{{ weather.temperature }}</td>
             <td>{{ weather.temperatureMin }}</td>
             <td>{{ weather.temperatureMax }}</td>
+            <td> {{ weather.sunrise }}</td>
+            <td> {{ weather.sunset }}</td>
             <td>{{ weather.humidity }}</td>
             <td>{{ weather.pressure }}</td>
             <td>{{ weather.windSpeed }}</td>
@@ -172,18 +177,48 @@
   </section>
 
   <!-- Forecast Section -->
-  <section class="forecast-section" *ngIf="selectedCityWeather && forecastData.length > 0 && !isLoading">
+  <section class="forecast-section" *ngIf="selectedCityWeather && dailyForecasts.length > 0 && !isLoading">
     <div class="forecast-container">
       <h3 class="section-title">5-Day Forecast</h3>
       <div class="forecast-cards">
-        <div class="forecast-card" *ngFor="let day of forecastData">
-          <div class="forecast-day">{{ day.date | date:'EEE' }}</div>
+        <div class="forecast-card" *ngFor="let day of dailyForecasts" (click)="toggleForecastDetails(day.dateString)"
+             [ngClass]="{'expanded': isForecastExpanded(day.dateString)}">
+          <div class="forecast-day">{{ day.date | date:'EEE, MMM d' }}</div>
           <div class="forecast-icon">
             <i [ngClass]="day.weatherIcon"></i>
           </div>
+          <div class="forecast-condition">{{ day.condition }}</div>
           <div class="forecast-temp">
-            <span class="forecast-temp-max">{{ day.temperatureMax }}°</span>
-            <span class="forecast-temp-min">{{ day.temperatureMin }}°</span>
+            <span class="forecast-temp-max">{{ day.maxTemp | number:'1.0-0' }}°</span>
+            <span class="forecast-temp-separator">/</span>
+            <span class="forecast-temp-min">{{ day.minTemp | number: '1.0-0' }}°</span>
+          </div>
+          <div class="expand-indicator">
+            <i class="fas" [ngClass]="isForecastExpanded(day.dateString) ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+          </div>
+
+          <!-- Expanded Forecast Details -->
+          <div class="hourly-forecast" *ngIf="isForecastExpanded(day.dateString)">
+            <div class="hourly-forecast-header">
+              <span>Time</span>
+              <span>Temp</span>
+              <span>Condition</span>
+              <span>Wind</span>
+              <span>Humidity</span>
+            </div>
+            <div class="hourly-forecast-row" *ngFor="let hourly of day.hourlyForecasts">
+              <span class="hourly-time">{{ hourly.date | date:'HH:mm' }}</span>
+              <span class="hourly-temp">{{ hourly.temp | number:'1.0-0' }}°C</span>
+              <span class="hourly-condition">
+                <i [ngClass]="hourly.formattedIcon"></i>
+                {{ hourly.condition }}
+              </span>
+              <span class="hourly-wind">
+                {{ hourly.windSpeed }} km/h
+                <i class="fas fa-arrow-up" [style.transform]="'rotate(' + hourly.windDeg + 'deg)'"></i>
+              </span>
+              <span class="hourly-humidity">{{ hourly.humidity }}%</span>
+            </div>
           </div>
         </div>
       </div>

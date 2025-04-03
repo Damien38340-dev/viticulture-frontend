@@ -6,6 +6,7 @@ export interface Weather {
   weatherCondition: string;
   weatherDescription: string;
   weatherIcon: string;
+  formattedIcon?: string;
   sunrise: number;
   sunset: number;
   temperature: number;
