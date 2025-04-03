@@ -222,14 +222,14 @@
             </div>
             <div class="hourly-forecast-row" *ngFor="let hourly of day.hourlyForecasts">
               <span class="hourly-time">{{ hourly.date | date:'HH:mm' }}</span>
-              <span class="hourly-temp">{{ hourly.temp | number:'1.0-0' }}°C</span>
+              <span class="hourly-temp">{{ hourly.temperature | number:'1.0-0' }}°C</span>
               <span class="hourly-condition">
                 <i [ngClass]="hourly.formattedIcon"></i>
-                {{ hourly.condition }}
+                {{ hourly.weatherCondition }}
               </span>
               <span class="hourly-wind">
                 {{ hourly.windSpeed }} km/h
-                <i class="fas fa-arrow-up" [style.transform]="'rotate(' + hourly.windDeg + 'deg)'"></i>
+                <i class="fas fa-arrow-up" [style.transform]="'rotate(' + hourly.windDirection + 'deg)'"></i>
               </span>
               <span class="hourly-humidity">{{ hourly.humidity }}%</span>
             </div>

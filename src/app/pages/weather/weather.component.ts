@@ -107,7 +107,8 @@ export class WeatherComponent implements OnInit {
       }
 
     });
-// Create daily forecast summaries
+
+    // Create daily forecast summaries
     this.dailyForecasts = Array.from(groupedForecasts.entries()).map(([dateString, forecasts]) => {
       // Find min and max temps for the day
       const temps = forecasts.map(f => f.temperature);
@@ -158,7 +159,6 @@ export class WeatherComponent implements OnInit {
   isForecastExpanded(dateString: string): boolean {
     return this.expandedForecast === dateString;
   }
-
 
 
   toggleAllWeatherData() {
