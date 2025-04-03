@@ -4,7 +4,7 @@
          alt="weather" height="4016" width="6016">
     <h1 class="hero-title">{{ title }}</h1>
     <div class="content-icon-container" *ngIf="selectedCityWeather">
-      <i class="weather-icon" [ngClass]="getWeatherIcon()"></i>
+      <i class="weather-icon" [ngClass]="selectedCityWeather.weatherIcon"></i>
     </div>
   </div>
 
@@ -15,6 +15,7 @@
         <div class="search-wrapper">
           <i class="search-icon fas fa-search"></i>
           <input
+            (keydown.enter)="fetchWeatherByCity(city)"
             [(ngModel)]="city"
             [ngModelOptions]="{standalone: true}"
             placeholder="Search by city"
@@ -25,14 +26,23 @@
           class="search-button"
           type="button"
           (click)="fetchWeatherByCity(city)"
+          [disabled]="isLoading"
         >
+          <span *ngIf="!isLoading">Search</span>
+          <span *ngIf="isLoading"><i class="fas fa-spinner fa-spin"></i></span>
           <span>Search</span>
         </button>
       </form>
     </div>
 
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="loading-container">
+      <i class="fas fa-spinner fa-spin loading-icon"></i>
+      <span>Loading weather data...</span>
+    </div>
+
     <!-- Weather Card Section -->
-    <div class="data-section">
+    <div class="data-section" *ngIf="!isLoading">
       <div *ngIf="selectedCityWeather" class="selected-content">
         <div class="content-card">
           <div class="content-card-header">
@@ -50,8 +60,8 @@
               </div>
             </div>
             <div class="weather-condition">
-              <i class="condition-icon" [ngClass]="getWeatherIcon()"></i>
-              <span class="condition-text">{{ getWeatherCondition() }}</span>
+              <i class="condition-icon" [ngClass]="selectedCityWeather.weatherIcon"></i>
+              <span class="condition-text">{{ selectedCityWeather.weatherCondition }}</span>
             </div>
           </div>
 
@@ -92,6 +102,13 @@
               </div>
             </div>
             <div class="detail-item">
+              <div class="detail-icon"><i class="fas fa-snowflake"></i></div>
+              <div class="detail-text">
+                <span class="detail-label">Snow</span>
+                <span class="detail-value">{{ selectedCityWeather.snow }} mm</span>
+              </div>
+            </div>
+            <div class="detail-item">
               <div class="detail-icon"><i class="fas fa-sun"></i></div>
               <div class="detail-text">
                 <span class="detail-label">Sunshine</span>
@@ -112,7 +129,7 @@
   </div>
 
   <!-- Weather History Section -->
-  <section class="results" *ngIf="showAllData">
+  <section class="results" *ngIf="showAllData && !isLoading">
     <div *ngIf="weatherDataList.length" class="results-container">
       <h3 class="section-title">Weather History</h3>
       <div class="table-responsive">
@@ -133,7 +150,8 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let weather of weatherDataList" (click)="selectWeatherData(weather)" [ngClass]="{'selected-row': isSelectedWeather(weather)}">
+          <tr *ngFor="let weather of weatherDataList" (click)="selectWeatherData(weather)"
+              [ngClass]="{'selected-row': isSelectedWeather(weather)}">
             <td>{{ weather.city }}</td>
             <td>{{ weather.date }}</td>
             <td>{{ weather.temperature }}</td>
@@ -144,6 +162,7 @@
             <td>{{ weather.windSpeed }}</td>
             <td>{{ weather.windDirection }}</td>
             <td>{{ weather.precipitation }}</td>
+            <td>{{ weather.snow }}</td>
             <td>{{ weather.insolationDuration }}</td>
           </tr>
           </tbody>
@@ -153,18 +172,18 @@
   </section>
 
   <!-- Forecast Section -->
-  <section class="forecast-section" *ngIf="selectedCityWeather">
+  <section class="forecast-section" *ngIf="selectedCityWeather && forecastData.length > 0 && !isLoading">
     <div class="forecast-container">
       <h3 class="section-title">5-Day Forecast</h3>
       <div class="forecast-cards">
-        <div class="forecast-card" *ngFor="let day of generateForecastData()">
+        <div class="forecast-card" *ngFor="let day of forecastData">
           <div class="forecast-day">{{ day.date | date:'EEE' }}</div>
           <div class="forecast-icon">
-            <i [ngClass]="day.icon"></i>
+            <i [ngClass]="day.weatherIcon"></i>
           </div>
           <div class="forecast-temp">
-            <span class="forecast-temp-max">{{ day.max }}°</span>
-            <span class="forecast-temp-min">{{ day.min }}°</span>
+            <span class="forecast-temp-max">{{ day.temperatureMax }}°</span>
+            <span class="forecast-temp-min">{{ day.temperatureMin }}°</span>
           </div>
         </div>
       </div>

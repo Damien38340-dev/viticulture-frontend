@@ -11,7 +11,6 @@ export class WeatherService {
 
   private httpClient: HttpClient = inject(HttpClient); // Two ways to do it, either in the constructor or with inject()
   private baseUrl = environment.apiUrl;
-  protected weatherDataList: Weather[] = [];
 
   constructor() {
   }
@@ -23,5 +22,9 @@ export class WeatherService {
 
   getWeatherByCity(city: string): Observable<Weather> {
     return this.httpClient.get<Weather>(`${this.baseUrl}/api/weather/city/${city}`);
+  }
+
+  getForecastByCity(city: string): Observable<Weather[]> {
+    return this.httpClient.get<Weather[]>(`${this.baseUrl}/api/weather/forecast/city/${city}`);
   }
 }

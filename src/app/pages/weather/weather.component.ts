@@ -18,9 +18,11 @@ export class WeatherComponent implements OnInit {
 
   weatherDataList: Weather[] = [];
   selectedCityWeather?: Weather;
+  forecastData: Weather[] = [];
   city: string = '';
   showAllData = false;
   currentYear = new Date().getFullYear();
+  isLoading = false;
 
   constructor(private weatherService: WeatherService) {
   }
@@ -30,24 +32,52 @@ export class WeatherComponent implements OnInit {
   }
 
   fetchAllWeather() {
+    this.isLoading = true;
     this.weatherService.getAllWeatherData().subscribe({
       next: data => {
         this.weatherDataList = data;
         // Set first item as selected if no selection exists
         if (!this.selectedCityWeather && this.weatherDataList.length > 0) {
           this.selectedCityWeather = this.weatherDataList[0];
+          this.fetchForecastData(this.selectedCityWeather.city);
         }
+        this.isLoading = false;
       },
-      error: err => console.error('Error fetching weather data', err),
+      error: err => {
+        console.error('Error fetching weather data', err);
+        this.isLoading = false;
+      },
     });
   }
 
   fetchWeatherByCity(city: string) {
     if (!city.trim()) return;
 
+    this.isLoading = true;
     this.weatherService.getWeatherByCity(city).subscribe({
-      next: data => this.selectedCityWeather = data,
-      error: err => console.error('Error fetching weather data', err)
+      next: data => {
+        this.selectedCityWeather = data;
+        this.fetchForecastData(city);
+        this.isLoading = false;
+      },
+      error: err => {
+        console.error('Error fetching weather data', err);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  fetchForecastData(city: string) {
+    this.isLoading = true;
+    this.weatherService.getForecastByCity(city).subscribe({
+      next: data => {
+        this.forecastData = data;
+        this.isLoading = false;
+      },
+      error: err => {
+        console.error('Error fetching forecast data', err);
+        this.isLoading = false;
+      }
     });
   }
 
@@ -64,63 +94,63 @@ export class WeatherComponent implements OnInit {
       this.selectedCityWeather?.date === weather.date;
   }
 
-  getWeatherIcon(): string {
-    if (!this.selectedCityWeather) return 'fas fa-cloud';
-
-    // Determine icon based on temperature, precipitation, etc.
-    const temp = this.selectedCityWeather.temperature;
-    const precip = this.selectedCityWeather.precipitation;
-
-    if (precip > 5) return 'fas fa-cloud-showers-heavy';
-    if (precip > 0) return 'fas fa-cloud-rain';
-    if (temp > 25) return 'fas fa-sun';
-    if (temp > 15) return 'fas fa-cloud-sun';
-    if (temp < 5) return 'fas fa-snowflake';
-
-    return 'fas fa-cloud';
-  }
-
-  getWeatherCondition(): string {
-    if (!this.selectedCityWeather) return 'Cloudy';
-
-    const temp = this.selectedCityWeather.temperature;
-    const precip = this.selectedCityWeather.precipitation;
-
-    if (precip > 5) return 'Heavy Rain';
-    if (precip > 0) return 'Light Rain';
-    if (temp > 25) return 'Sunny';
-    if (temp > 15) return 'Partly Cloudy';
-    if (temp < 5) return 'Snow';
-
-    return 'Cloudy';
-  }
-
-  generateForecastData() {
-    // This is placeholder data - in a real app, you'd get this from an API
-    if (!this.selectedCityWeather) return [];
-
-    const forecast = [];
-    const baseDate = new Date();
-    const baseTemp = this.selectedCityWeather.temperature;
-    const icons = ['fas fa-sun', 'fas fa-cloud-sun', 'fas fa-cloud',
-      'fas fa-cloud-rain', 'fas fa-cloud-showers-heavy'];
-
-    for (let i = 1; i <= 5; i++) {
-      const date = new Date(baseDate);
-      date.setDate(date.getDate() + i);
-
-      // Generate some random variations for the forecast
-      const variation = Math.floor(Math.random() * 8) - 4;
-      const iconIndex = Math.floor(Math.random() * icons.length);
-
-      forecast.push({
-        date: date,
-        min: Math.round(baseTemp - 5 + variation),
-        max: Math.round(baseTemp + 3 + variation),
-        icon: icons[iconIndex]
-      });
-    }
-
-    return forecast;
-  }
+  //
+  // getWeatherIcon(): string {
+  //   if (!this.selectedCityWeather) return 'fas fa-cloud';
+  //
+  //   // Determine icon based on temperature, precipitation, etc.
+  //   const temp = this.selectedCityWeather.temperature;
+  //   const precip = this.selectedCityWeather.precipitation;
+  //
+  //   if (precip > 5) return 'fas fa-cloud-showers-heavy';
+  //   if (precip > 0) return 'fas fa-cloud-rain';
+  //   if (temp > 25) return 'fas fa-sun';
+  //   if (temp > 15) return 'fas fa-cloud-sun';
+  //   if (temp < 5) return 'fas fa-snowflake';
+  //
+  //   return 'fas fa-cloud';
+  // }
+  //
+  // getWeatherCondition(): string {
+  //   if (!this.selectedCityWeather) return 'Cloudy';
+  //
+  //   const temp = this.selectedCityWeather.temperature;
+  //   const precip = this.selectedCityWeather.precipitation;
+  //
+  //   if (precip > 5) return 'Heavy Rain';
+  //   if (precip > 0) return 'Light Rain';
+  //   if (temp > 25) return 'Sunny';
+  //   if (temp > 15) return 'Partly Cloudy';
+  //   if (temp < 5) return 'Snow';
+  //
+  //   return 'Cloudy';
+  // }
+  //
+  // generateForecastData() {
+  //   // This is placeholder data - in a real app, you'd get this from an API
+  //   if (!this.selectedCityWeather) return [];
+  //
+  //   const forecast = [];
+  //   const baseDate = new Date();
+  //   const baseTemp = this.selectedCityWeather.temperature;
+  //   const icons = ['fas fa-sun', 'fas fa-cloud-sun', 'fas fa-cloud',
+  //     'fas fa-cloud-rain', 'fas fa-cloud-showers-heavy'];
+  //
+  //   for (let i = 1; i <= 5; i++) {
+  //     const date = new Date(baseDate);
+  //     date.setDate(date.getDate() + i);
+  //
+  //     // Generate some random variations for the forecast
+  //     const variation = Math.floor(Math.random() * 8) - 4;
+  //     const iconIndex = Math.floor(Math.random() * icons.length);
+  //
+  //     forecast.push({
+  //       date: date,
+  //       min: Math.round(baseTemp - 5 + variation),
+  //       max: Math.round(baseTemp + 3 + variation),
+  //       icon: icons[iconIndex]
+  //     });
+  //   }
+  //   return forecast;
+  // }
 }
