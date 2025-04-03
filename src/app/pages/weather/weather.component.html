@@ -45,7 +45,7 @@
       <div *ngIf="selectedCityWeather" class="selected-content">
         <div class="content-card">
           <div class="content-card-header">
-            <h3>Weather in {{ selectedCityWeather.city }}</h3>
+            <h3>Weather in {{ displayCityName(selectedCityWeather.city) }}</h3>
             <p class="content-date">{{ selectedCityWeather.date }}</p>
           </div>
 
@@ -59,7 +59,7 @@
               </div>
             </div>
             <div class="weather-condition">
-              <i class="condition-icon" [ngClass]="selectedCityWeather.formattedIcon"></i>
+              <img class="condition-icon" [src]="selectedCityWeather.formattedIcon" alt="selectedCityIcon">
               <span class="condition-text">{{ selectedCityWeather.weatherCondition }}</span>
               <span class="condition-text">{{ selectedCityWeather.weatherDescription }}</span>
             </div>
@@ -169,7 +169,7 @@
           <tbody>
           <tr *ngFor="let weather of weatherDataList" (click)="selectWeatherData(weather)"
               [ngClass]="{'selected-row': isSelectedWeather(weather)}">
-            <td>{{ weather.city }}</td>
+            <td>{{ displayCityName(weather.city) }}</td>
             <td>{{ weather.date }}</td>
             <td>{{ weather.temperature }}</td>
             <td>{{ weather.temperatureMin }}</td>
@@ -199,7 +199,7 @@
              [ngClass]="{'expanded': isForecastExpanded(day.dateString)}">
           <div class="forecast-day">{{ day.date | date:'EEE, MMM d' }}</div>
           <div class="forecast-icon">
-            <i [ngClass]="day.weatherIcon"></i>
+            <img [src]="day.weatherIcon" alt="forecastIcon">
           </div>
           <div class="forecast-condition">{{ day.condition }}</div>
           <div class="forecast-temp">
@@ -224,7 +224,7 @@
               <span class="hourly-time">{{ hourly.date | date:'HH:mm' }}</span>
               <span class="hourly-temp">{{ hourly.temperature | number:'1.0-0' }}°C</span>
               <span class="hourly-condition">
-                <i [ngClass]="hourly.formattedIcon"></i>
+                <img [src]="hourly.formattedIcon" alt="hourIcon">
                 {{ hourly.weatherCondition }}
               </span>
               <span class="hourly-wind">

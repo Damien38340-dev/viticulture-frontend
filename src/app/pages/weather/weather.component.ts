@@ -136,15 +136,15 @@ export class WeatherComponent implements OnInit {
     this.dailyForecasts = this.dailyForecasts.slice(0, 5);
   }
 
-  mapWeatherIconCode(iconCode: string): string {
-    return `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-  }
-
   // Apply icon mapping to weather object
   mapWeatherIcon(weather: Weather | undefined) {
     if (weather && weather.weatherIcon) {
       weather.formattedIcon = this.mapWeatherIconCode(weather.weatherIcon);
     }
+  }
+
+  mapWeatherIconCode(iconCode: string): string {
+    return `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
   }
 
   // Toggle expanded forecast details
@@ -172,6 +172,16 @@ export class WeatherComponent implements OnInit {
   isSelectedWeather(weather: Weather): boolean {
     return this.selectedCityWeather?.city === weather.city &&
       this.selectedCityWeather?.date === weather.date;
+  }
+
+  displayCityName(city: string): string {
+
+    if (!city) return '';
+
+    return city
+      .split('+')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
   }
 
   //
