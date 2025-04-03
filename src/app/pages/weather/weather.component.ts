@@ -205,32 +205,5 @@ export class WeatherComponent implements OnInit {
   //
   //   return 'Cloudy';
   // }
-  //
-  // generateForecastData() {
-  //   // This is placeholder data - in a real app, you'd get this from an API
-  //   if (!this.selectedCityWeather) return [];
-  //
-  //   const forecast = [];
-  //   const baseDate = new Date();
-  //   const baseTemp = this.selectedCityWeather.temperature;
-  //   const icons = ['fas fa-sun', 'fas fa-cloud-sun', 'fas fa-cloud',
-  //     'fas fa-cloud-rain', 'fas fa-cloud-showers-heavy'];
-  //
-  //   for (let i = 1; i <= 5; i++) {
-  //     const date = new Date(baseDate);
-  //     date.setDate(date.getDate() + i);
-  //
-  //     // Generate some random variations for the forecast
-  //     const variation = Math.floor(Math.random() * 8) - 4;
-  //     const iconIndex = Math.floor(Math.random() * icons.length);
-  //
-  //     forecast.push({
-  //       date: date,
-  //       min: Math.round(baseTemp - 5 + variation),
-  //       max: Math.round(baseTemp + 3 + variation),
-  //       icon: icons[iconIndex]
-  //     });
-  //   }
-  //   return forecast;
-  // }
+
 }

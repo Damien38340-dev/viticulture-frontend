@@ -4,7 +4,7 @@
          alt="weather" height="4016" width="6016">
     <h1 class="hero-title">{{ title }}</h1>
     <div class="content-icon-container" *ngIf="selectedCityWeather">
-      <i class="weather-icon" [ngClass]="selectedCityWeather.formattedIcon"></i>
+      <img [src]="selectedCityWeather.formattedIcon" alt="Weather-icon"/>
     </div>
   </div>
 
@@ -116,16 +116,16 @@
               </div>
             </div>
             <div class="detail-item">
-              <div class="detail-icon"><i class="fa-regular fa-sun "></i></div>
+              <div class="detail-icon"><img [src]="mapWeatherIconCode('01d')" alt="sunrise"/></div>
               <div class="detail-text">
                 <span class="detail-label">Sunrise</span>
                 <span class="detail-value">{{ selectedCityWeather.sunrise }}</span>
               </div>
             </div>
             <div class="detail-item">
-              <div class="detail-icon"><i class="fa-solid fa-mountain-sun "></i></div>
+              <div class="detail-icon"><img [src]="mapWeatherIconCode('01n')" alt="sunset"/></div>
               <div class="detail-text">
-                <span class="detail-label">Sunrise</span>
+                <span class="detail-label">Sunset</span>
                 <span class="detail-value">{{ selectedCityWeather.sunset }}</span>
               </div>
             </div>

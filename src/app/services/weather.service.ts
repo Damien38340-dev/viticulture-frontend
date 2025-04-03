@@ -15,7 +15,6 @@ export class WeatherService {
   constructor() {
   }
 
-
   getAllWeatherData(): Observable<Weather[]> {
     return this.httpClient.get<Weather[]>(`${this.baseUrl}/api/weather`)
   }
@@ -27,6 +26,5 @@ export class WeatherService {
   getForecastByCity(city: string): Observable<Weather[]> {
     return this.httpClient.get<Weather[]>(`${this.baseUrl}/api/weather/forecast/city/${city}`);
   }
-
 
 }
