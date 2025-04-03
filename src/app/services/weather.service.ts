@@ -21,18 +21,12 @@ export class WeatherService {
   }
 
   getWeatherByCity(city: string): Observable<Weather> {
-    const formattedCity = this.formatCityName(city);
-    return this.httpClient.get<Weather>(`${this.baseUrl}/api/weather/city/${formattedCity}`);
+    return this.httpClient.get<Weather>(`${this.baseUrl}/api/weather/city/${city}`);
   }
 
   getForecastByCity(city: string): Observable<Weather[]> {
-    const formattedCity = this.formatCityName(city);
-    return this.httpClient.get<Weather[]>(`${this.baseUrl}/api/weather/forecast/city/${formattedCity}`);
+    return this.httpClient.get<Weather[]>(`${this.baseUrl}/api/weather/forecast/city/${city}`);
   }
 
-
-  formatCityName(city: string): string {
-    return city.replace(/\s+/g, '+');
-  }
 
 }
