@@ -235,7 +235,9 @@ section {
 }
 
 .footer-logo {
-  height: 40px;
+  height: auto;
+  width: auto;
+  max-height: 40px;
   margin-bottom: 1rem;
 }
 
@@ -263,6 +265,14 @@ section {
   transform: translateY(-3px);
 }
 
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+}
+
 .footer-links h4, .footer-contact h4 {
   color: white;
   margin-bottom: 1.5rem;
@@ -283,6 +293,12 @@ section {
 
 .footer-links a:hover {
   color: var(--primary-hover);
+}
+
+.footer-links ul {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
 }
 
 .footer-contact p {
@@ -323,6 +339,10 @@ section {
 }
 
 @media (max-width: 768px) {
+
+  .footer-logo {
+    max-height: 30px;
+  }
 
   .hero-subtitle {
     font-size: 1.2rem;

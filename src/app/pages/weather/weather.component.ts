@@ -163,6 +163,10 @@ export class WeatherComponent implements OnInit {
 
   toggleAllWeatherData() {
     this.showAllData = !this.showAllData;
+
+    if(this.showAllData){
+      this.fetchAllWeather();
+    }
   }
 
   selectWeatherData(weather: Weather): void {
