@@ -1,38 +1,43 @@
 <div class="content-page">
-  <div class="hero-image-container">
-    <img class="hero-image" ngSrc="/assets/images/pexels-alex-staudinger-829197-1731834.jpg" [priority]="true"
-         alt="weather" height="4016" width="6016">
-    <h1 class="hero-title">{{ title }}</h1>
-    <div class="content-icon-container" *ngIf="selectedCityWeather">
-      <img [src]="selectedCityWeather.formattedIcon" alt="Weather-icon"/>
+  <!-- Hero Section -->
+  <header class="hero-section">
+    <div class="hero-image-container">
+      <img class="hero-image" ngSrc="/assets/images/pexels-alex-staudinger-829197-1731834.jpg" [priority]="true"
+           alt="weather" height="4016" width="6016">
+      <h1 class="hero-title">{{ title }}</h1>
+      <div class="weather-icon-container" *ngIf="selectedCityWeather">
+        <img [src]="selectedCityWeather.formattedIcon" alt="Weather-icon"/>
+      </div>
     </div>
-  </div>
+  </header>
 
-  <div class="content-container">
-    <!-- Enhanced Search Section -->
-    <div class="search-section">
-      <form class="content-search-form">
-        <div class="search-wrapper">
-          <i class="search-icon fas fa-search"></i>
-          <input
-            (keydown.enter)="fetchWeatherByCity(city)"
-            [(ngModel)]="city"
-            [ngModelOptions]="{standalone: true}"
-            placeholder="Search by city"
-            class="search-input"
+  <main class="main-content">
+    <!-- Search Section -->
+    <section class="search-section">
+      <div class="container">
+        <form class="search-form">
+          <div class="search-wrapper">
+            <i class="search-icon fas fa-search"></i>
+            <input
+              (keydown.enter)="fetchWeatherByCity(city)"
+              [(ngModel)]="city"
+              [ngModelOptions]="{standalone: true}"
+              placeholder="Search by city"
+              class="search-input"
+            >
+          </div>
+          <button
+            class="search-button"
+            type="button"
+            (click)="fetchWeatherByCity(city)"
+            [disabled]="isLoading"
           >
-        </div>
-        <button
-          class="search-button"
-          type="button"
-          (click)="fetchWeatherByCity(city)"
-          [disabled]="isLoading"
-        >
-          <span *ngIf="!isLoading">Search</span>
-          <span *ngIf="isLoading"><i class="fas fa-spinner fa-spin"></i></span>
-        </button>
-      </form>
-    </div>
+            <span *ngIf="!isLoading">Search</span>
+            <span *ngIf="isLoading"><i class="fas fa-spinner fa-spin"></i></span>
+          </button>
+        </form>
+      </div>
+    </section>
 
     <!-- Loading Indicator -->
     <div *ngIf="isLoading" class="loading-container">
@@ -40,16 +45,16 @@
       <span>Loading weather data...</span>
     </div>
 
-    <!-- Weather Card Section -->
-    <div class="data-section" *ngIf="!isLoading">
-      <div *ngIf="selectedCityWeather" class="selected-content">
-        <div class="content-card">
-          <div class="content-card-header">
+    <!-- Current Weather Section -->
+    <section class="weather-current" *ngIf="!isLoading && selectedCityWeather">
+      <div class="container">
+        <div class="weather-card">
+          <div class="weather-card-header">
             <h3>Weather in {{ displayCityName(selectedCityWeather.city) }}</h3>
-            <p class="content-date">{{ selectedCityWeather.date }}</p>
+            <p class="weather-date">{{ selectedCityWeather.date }}</p>
           </div>
 
-          <div class="content-main-info">
+          <div class="weather-main-info">
             <div class="temperature-display">
               <span class="current-temp">{{ selectedCityWeather.temperature }}°C</span>
               <div class="temp-range">
@@ -65,7 +70,7 @@
             </div>
           </div>
 
-          <div class="content-details">
+          <div class="weather-details">
             <div class="detail-item">
               <div class="detail-icon"><i class="fas fa-tint"></i></div>
               <div class="detail-text">
@@ -131,120 +136,119 @@
             </div>
           </div>
         </div>
+
+        <button class="btn btn-primary" (click)="toggleAllWeatherData()">
+          {{ showAllData ? 'Hide' : 'Show' }} All Weather Data
+        </button>
       </div>
+    </section>
 
-      <button
-        class="show-all-data-btn"
-        (click)="toggleAllWeatherData()"
-      >
-        {{ showAllData ? 'Hide' : 'Show' }} All Weather Data
-      </button>
-    </div>
-  </div>
-
-  <!-- Weather History Section -->
-  <section class="results" *ngIf="showAllData && !isLoading">
-    <div *ngIf="weatherDataList.length" class="results-container">
-      <h3 class="section-title">Weather History</h3>
-      <div class="table-responsive">
-        <table>
-          <thead>
-          <tr>
-            <th>City</th>
-            <th>Date</th>
-            <th>Temp (°C)</th>
-            <th>Min Temp (°C)</th>
-            <th>Max Temp (°C)</th>
-            <th>Sunrise</th>
-            <th>Sunset</th>
-            <th>Humidity (%)</th>
-            <th>Pressure (hPa)</th>
-            <th>Wind Speed (km/h)</th>
-            <th>Wind Direction (°)</th>
-            <th>Precipitation (mm)</th>
-            <th>Snow (mm)</th>
-            <th>Insolation (hrs)</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let weather of weatherDataList" (click)="selectWeatherData(weather)"
-              [ngClass]="{'selected-row': isSelectedWeather(weather)}">
-            <td>{{ displayCityName(weather.city) }}</td>
-            <td>{{ weather.date }}</td>
-            <td>{{ weather.temperature }}</td>
-            <td>{{ weather.temperatureMin }}</td>
-            <td>{{ weather.temperatureMax }}</td>
-            <td> {{ weather.sunrise }}</td>
-            <td> {{ weather.sunset }}</td>
-            <td>{{ weather.humidity }}</td>
-            <td>{{ weather.pressure }}</td>
-            <td>{{ weather.windSpeed }}</td>
-            <td>{{ weather.windDirection }}</td>
-            <td>{{ weather.precipitation }}</td>
-            <td>{{ weather.snow }}</td>
-            <td>{{ weather.insolationDuration }}</td>
-          </tr>
-          </tbody>
-        </table>
+    <!-- Weather History Section -->
+    <section class="weather-history" *ngIf="showAllData && !isLoading && weatherDataList.length">
+      <div class="container">
+        <h3 class="section-title">Weather History</h3>
+        <div class="table-responsive">
+          <table>
+            <thead>
+            <tr>
+              <th>City</th>
+              <th>Date</th>
+              <th>Temp (°C)</th>
+              <th>Min Temp (°C)</th>
+              <th>Max Temp (°C)</th>
+              <th>Sunrise</th>
+              <th>Sunset</th>
+              <th>Humidity (%)</th>
+              <th>Pressure (hPa)</th>
+              <th>Wind Speed (km/h)</th>
+              <th>Wind Direction (°)</th>
+              <th>Precipitation (mm)</th>
+              <th>Snow (mm)</th>
+              <th>Insolation (hrs)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let weather of weatherDataList"
+                (click)="selectWeatherData(weather)"
+                [ngClass]="{'selected-row': isSelectedWeather(weather)}">
+              <td>{{ displayCityName(weather.city) }}</td>
+              <td>{{ weather.date }}</td>
+              <td>{{ weather.temperature }}</td>
+              <td>{{ weather.temperatureMin }}</td>
+              <td>{{ weather.temperatureMax }}</td>
+              <td>{{ weather.sunrise }}</td>
+              <td>{{ weather.sunset }}</td>
+              <td>{{ weather.humidity }}</td>
+              <td>{{ weather.pressure }}</td>
+              <td>{{ weather.windSpeed }}</td>
+              <td>{{ weather.windDirection }}</td>
+              <td>{{ weather.precipitation }}</td>
+              <td>{{ weather.snow }}</td>
+              <td>{{ weather.insolationDuration }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Forecast Section -->
-  <section class="forecast-section" *ngIf="selectedCityWeather && dailyForecasts.length > 0 && !isLoading">
-    <div class="forecast-container">
-      <h3 class="section-title">5-Day Forecast</h3>
-      <div class="forecast-cards">
-        <div class="forecast-card" *ngFor="let day of dailyForecasts" (click)="toggleForecastDetails(day.dateString)"
-             [ngClass]="{'expanded': isForecastExpanded(day.dateString)}">
-          <div class="forecast-day">{{ day.date | date:'EEE, MMM d' }}</div>
-          <div class="forecast-icon">
-            <img [src]="day.icon" alt="forecastIcon">
-            <!--            <i [ngClass]="day.icon"></i>-->
-          </div>
-          <div class="forecast-condition">{{ day.condition }}</div>
-          <div class="forecast-temp">
-            <span class="forecast-temp-max">{{ day.maxTemp | number:'1.0-0' }}°</span>
-            <span class="forecast-temp-separator">/</span>
-            <span class="forecast-temp-min">{{ day.minTemp | number: '1.0-0' }}°</span>
-          </div>
-          <div class="expand-indicator">
-            <i class="fas" [ngClass]="isForecastExpanded(day.dateString) ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-          </div>
-
-          <!-- Expanded Forecast Details -->
-          <div class="hourly-forecast" *ngIf="isForecastExpanded(day.dateString)">
-            <div class="hourly-forecast-header">
-              <span>Time</span>
-              <span>Temp</span>
-              <span>Condition</span>
-              <span>Wind</span>
-              <span>Humidity</span>
+    <!-- Forecast Section -->
+    <section class="forecast-section" *ngIf="selectedCityWeather && dailyForecasts.length > 0 && !isLoading">
+      <div class="container">
+        <h3 class="section-title">5-Day Forecast</h3>
+        <div class="forecast-cards">
+          <div class="forecast-card" *ngFor="let day of dailyForecasts"
+               (click)="toggleForecastDetails(day.dateString)"
+               [ngClass]="{'expanded': isForecastExpanded(day.dateString)}">
+            <div class="forecast-header">
+              <div class="forecast-day">{{ day.date | date:'EEE, MMM d' }}</div>
+              <div class="forecast-icon">
+                <img [src]="day.icon" alt="forecastIcon">
+              </div>
+              <div class="forecast-condition">{{ day.condition }}</div>
+              <div class="forecast-temp">
+                <span class="forecast-temp-max">{{ day.maxTemp | number:'1.0-0' }}°</span>
+                <span class="forecast-temp-separator">/</span>
+                <span class="forecast-temp-min">{{ day.minTemp | number: '1.0-0' }}°</span>
+              </div>
+              <div class="expand-indicator">
+                <i class="fas" [ngClass]="isForecastExpanded(day.dateString) ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+              </div>
             </div>
-            <div class="hourly-forecast-row" *ngFor="let hourly of day.hourlyForecasts">
-              <span class="hourly-time">{{ hourly.date | date:'HH:mm' }}</span>
-              <span class="hourly-temp">{{ hourly.temperature | number:'1.0-0' }}°C</span>
-              <span class="hourly-condition">
-                <div class="tooltip-container">
-                  <img class="icon-forecast" [src]="hourly.formattedIcon" alt="hourIcon">
-                <div class="hide"> {{ hourly.weatherDescription }} </div>
-                </div>
-              </span>
-              <span class="hourly-wind">
-                {{ hourly.windSpeed }} km/h
-                <i class="fas fa-arrow-up" [style.transform]="'rotate(' + hourly.windDirection + 'deg)'"></i>
-              </span>
-              <span class="hourly-humidity">{{ hourly.humidity }}%</span>
+
+            <!-- Hourly Forecast Details -->
+            <div class="hourly-forecast" *ngIf="isForecastExpanded(day.dateString)">
+              <div class="hourly-forecast-header">
+                <span>Time</span>
+                <span>Temp</span>
+                <span>Condition</span>
+                <span>Wind</span>
+                <span>Humidity</span>
+              </div>
+              <div class="hourly-forecast-row" *ngFor="let hourly of day.hourlyForecasts">
+                <span class="hourly-time">{{ hourly.date | date:'HH:mm' }}</span>
+                <span class="hourly-temp">{{ hourly.temperature | number:'1.0-0' }}°C</span>
+                <span class="hourly-condition">
+                  <div class="tooltip-container">
+                    <img class="icon-forecast" [src]="hourly.formattedIcon" alt="hourIcon">
+                    <div class="tooltip">{{ hourly.weatherDescription }}</div>
+                  </div>
+                </span>
+                <span class="hourly-wind">
+                  {{ hourly.windSpeed }} km/h
+                  <i class="fas fa-arrow-up" [style.transform]="'rotate(' + hourly.windDirection + 'deg)'"></i>
+                </span>
+                <span class="hourly-humidity">{{ hourly.humidity }}%</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-
-  <footer>
-    <div class="footer-content">
+  <footer class="site-footer">
+    <div class="container">
       <p>Weather data provided by Weather API</p>
       <p>© {{ currentYear }} Weather App</p>
     </div>
