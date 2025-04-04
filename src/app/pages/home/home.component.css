@@ -231,6 +231,9 @@ section {
 }
 
 .footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-bottom: 1rem;
 }
 
@@ -364,6 +367,16 @@ section {
 }
 
 @media (max-width: 576px) {
+
+  .hero-title {
+    top: -10px;
+  }
+
+  .hero-subtitle {
+    margin-bottom: 3rem;
+    font-size: 1rem;
+  }
+
   .hero-cta {
     flex-direction: column;
     width: 80%;
