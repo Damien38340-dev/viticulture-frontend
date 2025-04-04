@@ -1,0 +1,10 @@
+.api-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.api-container i, .api-container b, .api-container p, .api-container a {
+  margin: 10px 0;
+}
