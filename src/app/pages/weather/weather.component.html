@@ -200,7 +200,7 @@
           <div class="forecast-day">{{ day.date | date:'EEE, MMM d' }}</div>
           <div class="forecast-icon">
             <img [src]="day.icon" alt="forecastIcon">
-<!--            <i [ngClass]="day.icon"></i>-->
+            <!--            <i [ngClass]="day.icon"></i>-->
           </div>
           <div class="forecast-condition">{{ day.condition }}</div>
           <div class="forecast-temp">
@@ -225,8 +225,10 @@
               <span class="hourly-time">{{ hourly.date | date:'HH:mm' }}</span>
               <span class="hourly-temp">{{ hourly.temperature | number:'1.0-0' }}°C</span>
               <span class="hourly-condition">
-                <img class="icon-forecast" [src]="hourly.formattedIcon" alt="hourIcon">
-                <div class="hide"> {{ hourly.weatherCondition }} </div>
+                <div class="tooltip-container">
+                  <img class="icon-forecast" [src]="hourly.formattedIcon" alt="hourIcon">
+                <div class="hide"> {{ hourly.weatherDescription }} </div>
+                </div>
               </span>
               <span class="hourly-wind">
                 {{ hourly.windSpeed }} km/h

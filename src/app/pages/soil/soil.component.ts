@@ -21,6 +21,8 @@ export class SoilComponent implements OnInit {
   polyId: string = '';
   showAllData = false;
   currentYear = new Date().getFullYear();
+  isLoading = false;
+
 
   constructor(private soilService: SoilService) {
   }
@@ -30,16 +32,33 @@ export class SoilComponent implements OnInit {
   }
 
   fetchAllSoilData() {
+    this.isLoading = true;
     this.soilService.getAllSoilData().subscribe({
-      next: data => this.soilDataList = data,
-      error: err => console.error('Error fetching soil data', err),
+      next: data => {
+        this.soilDataList = data;
+        if (!this.selectedPolyId && this.soilDataList.length > 0) {
+          this.selectedPolyId = this.soilDataList[0];
+        }
+        this.isLoading = false;
+      },
+      error: err => {
+        console.error('Error fetching soil data', err);
+        this.isLoading = false;
+      }
     });
   }
 
   fetchSoilDataByPolyId(polyId: string) {
+    this.isLoading = true;
     this.soilService.getSoilDataByPolyId(polyId).subscribe({
-      next: data => this.selectedPolyId = data,
-      error: err => console.error('Error fetching soil data', err),
+      next: data => {
+        this.selectedPolyId = data;
+        this.isLoading = false
+      },
+      error: err => {
+        console.error('Error fetching soil data', err);
+        this.isLoading = false;
+      }
     });
   }
 

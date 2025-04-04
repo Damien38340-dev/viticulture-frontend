@@ -13,7 +13,6 @@ export class SoilService {
   private baseUrl = environment.apiUrl;
   protected soilDataList: Soil[] = [];
 
-
   constructor() {
   }
 

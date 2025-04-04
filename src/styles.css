@@ -196,7 +196,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 30px;
-  background-color: rgba(91, 134, 190, 0.1);
+  background-color: rgba(180, 194, 220, 0.1);
 }
 
 .content-details {
@@ -419,13 +419,31 @@ a:hover {
   color: var(--tertiaryLight);
 }
 
-.icon-forecast:hover + .hide {
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-container:hover .hide {
   display: block;
-  color: red;
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 .hide {
   display: none;
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--background-color);
+  color: var(--primary);
+  padding: 8px 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
 footer {

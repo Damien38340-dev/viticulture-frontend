@@ -12,6 +12,7 @@
         <div class="search-wrapper">
           <i class="search-icon fas fa-search"></i>
           <input
+            (keydown.enter)="fetchSoilDataByPolyId(polyId)"
             [(ngModel)]="polyId"
             [ngModelOptions]="{standalone: true}"
             placeholder="Search by polyId"
@@ -22,14 +23,25 @@
           class="search-button"
           type="button"
           (click)="fetchSoilDataByPolyId(polyId)"
+          [disabled]="isLoading"
         >
-          <span>Search</span>
+          <span *ngIf="!isLoading">Search</span>
+          <span *ngIf="isLoading"><i class="fas fa-spinner fa-spin"></i></span>
         </button>
       </form>
+      <i>For example: 67e2dd0686ec340008b96099</i>
+      <b>To generate a polyId</b>
+      <p>Please check on</p>
+      <a href="https://home.agromonitoring.com">https://home.agromonitoring.com</a>
     </div>
 
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="loading-container">
+      <i class="fas fa-spinner fa-spin loading-icon"></i>
+      <span>Loading weather data...</span>
+    </div>
 
-    <div class="data-section">
+    <div class="data-section" *ngIf="!isLoading">
       <div *ngIf="selectedPolyId" class="selected-content">
         <div class="content-card">
           <div class="content-card-header">
@@ -53,7 +65,7 @@
     </div>
   </div>
 
-  <section class="results" *ngIf="showAllData">
+  <section class="results" *ngIf="showAllData && !isLoading">
     <div *ngIf="soilDataList.length" class="results-container">
       <h3 class="section-title">Soil Data History</h3>
       <div class="table-responsive">
@@ -68,7 +80,8 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let soil of soilDataList" (click)="selectSoilData(soil)" [ngClass]="{'selected-row': isSelectedSoil(soil)}">
+          <tr *ngFor="let soil of soilDataList" (click)="selectSoilData(soil)"
+              [ngClass]="{'selected-row': isSelectedSoil(soil)}">
             <td>{{ soil.polyId }}</td>
             <td>{{ soil.date }}</td>
             <td>{{ soil.t10 }}</td>

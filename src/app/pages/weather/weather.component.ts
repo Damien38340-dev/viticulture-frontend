@@ -49,7 +49,7 @@ export class WeatherComponent implements OnInit {
       error: err => {
         console.error('Error fetching weather data', err);
         this.isLoading = false;
-      },
+      }
     });
   }
 
@@ -183,37 +183,4 @@ export class WeatherComponent implements OnInit {
       .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(' ');
   }
-
-  //
-  // getWeatherIcon(): string {
-  //   if (!this.selectedCityWeather) return 'fas fa-cloud';
-  //
-  //   // Determine icon based on temperature, precipitation, etc.
-  //   const temp = this.selectedCityWeather.temperature;
-  //   const precip = this.selectedCityWeather.precipitation;
-  //
-  //   if (precip > 5) return 'fas fa-cloud-showers-heavy';
-  //   if (precip > 0) return 'fas fa-cloud-rain';
-  //   if (temp > 25) return 'fas fa-sun';
-  //   if (temp > 15) return 'fas fa-cloud-sun';
-  //   if (temp < 5) return 'fas fa-snowflake';
-  //
-  //   return 'fas fa-cloud';
-  // }
-  //
-  // getWeatherCondition(): string {
-  //   if (!this.selectedCityWeather) return 'Cloudy';
-  //
-  //   const temp = this.selectedCityWeather.temperature;
-  //   const precip = this.selectedCityWeather.precipitation;
-  //
-  //   if (precip > 5) return 'Heavy Rain';
-  //   if (precip > 0) return 'Light Rain';
-  //   if (temp > 25) return 'Sunny';
-  //   if (temp > 15) return 'Partly Cloudy';
-  //   if (temp < 5) return 'Snow';
-  //
-  //   return 'Cloudy';
-  // }
-
 }
